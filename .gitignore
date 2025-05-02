@@ -1,0 +1,62 @@
+## Игнорировать файлы сборки и бинарные файлы ##
+[Bb]in/
+[Oo]bj/
+*.exe
+*.dll
+*.pdb
+*.cache
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+## Файлы резервных копий и временные файлы ##
+*.bak
+*.tmp
+*.~*
+*~
+
+## Файлы пакетов NuGet ##
+[Nn]u[Gg]et/
+*.nupkg
+packages/
+
+## Файлы тестовых покрытий и логи ##
+*.coverage
+*.log
+TestResults/
+
+## Файлы Rider / ReSharper ##
+.idea/
+*.sln.iml
+*.csproj.iml
+_ReSharper.*
+*.DotSettings.user
+
+## Файлы VS Code ##
+.vscode/
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+
+## Файлы Azure Functions / Docker ##
+.local.settings.json
+.vs/
+func-artifacts/
+.secrets/
+
+## Файлы Unity (если проект Unity) ##
+/[Ll]ibrary/
+/[Tt]emp/
+/[Bb]uild/
+/[Bb]uilds/
+/[Pp]rojectSettings/Assets/AssetStoreTools*
+/[Aa]ssets/Plugins*
+/[Aa]ssets/StreamingAssets*
+*.unitypackage
+*.apk
+*.aab
+
+## Файлы macOS (если разработка ведётся на Mac) ##
+.DS_Store
+._*
