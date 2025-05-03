@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using TestApp1.Entities;
 
 namespace TestApp1.Database;
 
@@ -11,10 +12,4 @@ public class DatabaseContext : DbContext
     {
         
     }
-}
-
-public class Product
-{
-    public int Id { get; set; }
-    public string Name { get; set; }
 }

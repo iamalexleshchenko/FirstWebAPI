@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TestApp1.Database;
+using TestApp1.Entities;
 using TestApp1.Services;
 
 namespace TestApp1.Controllers;
