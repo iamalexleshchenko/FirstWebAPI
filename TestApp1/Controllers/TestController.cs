@@ -121,4 +121,59 @@ public class TestController: ControllerBase
     }
     
     // реализовать обновление нескольких продуктов
+    [HttpPatch("/updateProducts")]
+    public async Task<IActionResult> UpdateProducts([FromBody] List<Product> products)
+    {
+        foreach (Product element in products)
+        {
+            await DatabaseContext.Products
+                .Where(product => product.Id == element.Id)
+                .ExecuteUpdateAsync(s => s
+                    .SetProperty(product => product.Name, element.Name)
+                    .SetProperty(product => product.Price, element.Price)
+                );
+        }
+
+        return Ok();
+    }
+    
+    // обновление нескольких продуктов с помощью курсорной пагинации
+    [HttpPatch("/updateProductsWithPagination")]
+    public async Task<IActionResult> UpdateProductsWithPagination([FromBody] List<Product> productsFromRequest)
+    {
+        int take = 3;
+        int cursor = -1;
+
+        List<Product> listFromDb = new List<Product>();
+
+        listFromDb = await DatabaseContext.Products
+            .OrderBy(product => product.Id)
+            .Where(product => product.Id > cursor)
+            .Take(take)
+            .ToListAsync();
+        
+        while (listFromDb.Any())
+        {
+            foreach (Product productFromDb in listFromDb)
+            {
+                Product productFromRequest = productsFromRequest.FirstOrDefault(p => p.Id == productFromDb.Id);
+                if (productFromRequest != null)
+                {
+                    productFromDb.Name = productFromRequest.Name;
+                    productFromDb.Price = productFromRequest.Price;
+                }
+            }
+            await DatabaseContext.SaveChangesAsync();
+            cursor = listFromDb.LastOrDefault().Id;
+            listFromDb = await DatabaseContext.Products
+                .OrderBy(product => product.Id)
+                .Where(product => product.Id > cursor)
+                .Take(take)
+                .ToListAsync(); 
+        }
+
+        return Ok();
+    }
+    // создать ветку (с конвенциональным названием), закоммитить и запушить, 
+    // создать пулреквест (в райдере не создавать, пилить руками в гите)
 }
