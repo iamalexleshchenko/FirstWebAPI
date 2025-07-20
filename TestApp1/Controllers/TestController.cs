@@ -151,7 +151,7 @@ public class TestController: ControllerBase
             .Where(product => product.Id > cursor)
             .Take(take)
             .ToListAsync();
-        
+
         while (listFromDb.Any())
         {
             foreach (Product productFromDb in listFromDb)
@@ -163,17 +163,16 @@ public class TestController: ControllerBase
                     productFromDb.Price = productFromRequest.Price;
                 }
             }
+
             await DatabaseContext.SaveChangesAsync();
             cursor = listFromDb.LastOrDefault().Id;
             listFromDb = await DatabaseContext.Products
                 .OrderBy(product => product.Id)
                 .Where(product => product.Id > cursor)
                 .Take(take)
-                .ToListAsync(); 
+                .ToListAsync();
         }
 
         return Ok();
     }
-    // создать ветку (с конвенциональным названием), закоммитить и запушить, 
-    // создать пулреквест (в райдере не создавать, пилить руками в гите)
 }
